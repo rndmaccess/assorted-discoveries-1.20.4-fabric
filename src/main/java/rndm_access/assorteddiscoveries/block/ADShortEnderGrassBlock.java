@@ -10,11 +10,11 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import rndm_access.assorteddiscoveries.core.CBlockTags;
 
-public class ADTallEnderGrassBlock extends PlantBlock {
-    public static final MapCodec<ADTallEnderGrassBlock> CODEC = createCodec(ADTallEnderGrassBlock::new);
+public class ADShortEnderGrassBlock extends PlantBlock {
+    public static final MapCodec<ADShortEnderGrassBlock> CODEC = createCodec(ADShortEnderGrassBlock::new);
     protected static final VoxelShape ENDER_GRASS_SHAPE;
 
-    public ADTallEnderGrassBlock(AbstractBlock.Settings settings) {
+    public ADShortEnderGrassBlock(AbstractBlock.Settings settings) {
         super(settings);
     }
 

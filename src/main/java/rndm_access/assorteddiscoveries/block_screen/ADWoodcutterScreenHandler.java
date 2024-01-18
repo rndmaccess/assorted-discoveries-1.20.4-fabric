@@ -51,7 +51,7 @@ public class ADWoodcutterScreenHandler extends ScreenHandler {
         };
         this.output = new CraftingResultInventory();
         this.context = context;
-        this.world = playerInventory.player.method_48926();
+        this.world = playerInventory.player.getWorld();
         this.inputSlot = this.addSlot(new Slot(this.input, 0, 20, 33));
         this.outputSlot = this.addSlot(new Slot(this.output, 1, 143, 33) {
             public boolean canInsert(ItemStack stack) {
@@ -59,7 +59,7 @@ public class ADWoodcutterScreenHandler extends ScreenHandler {
             }
 
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
-                stack.onCraftByPlayer(player.method_48926(), player, stack.getCount());
+                stack.onCraftByPlayer(player.getWorld(), player, stack.getCount());
                 ADWoodcutterScreenHandler.this.output.unlockLastRecipe(player, this.getInputStacks());
                 ItemStack itemStack = ADWoodcutterScreenHandler.this.inputSlot.takeStack(1);
                 if (!itemStack.isEmpty()) {
@@ -183,7 +183,7 @@ public class ADWoodcutterScreenHandler extends ScreenHandler {
             Item item = itemStack2.getItem();
             itemStack = itemStack2.copy();
             if (index == 1) {
-                item.onCraftByPlayer(itemStack2, player.method_48926(), player);
+                item.onCraftByPlayer(itemStack2, player.getWorld(), player);
                 if (!this.insertItem(itemStack2, 2, 38, true)) {
                     return ItemStack.EMPTY;
                 }

@@ -7,7 +7,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.*;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
@@ -28,7 +27,6 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class ADCandleCakeBlock extends AbstractCandleBlock {
     public static final MapCodec<ADCandleCakeBlock> CODEC = RecordCodecBuilder.mapCodec((instance) -> instance.group(
