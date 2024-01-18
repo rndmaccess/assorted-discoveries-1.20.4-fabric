@@ -148,8 +148,7 @@ public class ADBlocks {
     public static final Block CRACKED_STONE_BRICK_SLAB = new SlabBlock(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS));
     public static final Block CRACKED_STONE_BRICK_WALL = new WallBlock(AbstractBlock.Settings.copy(Blocks.CRACKED_STONE_BRICKS));
     public static final Block BLUEBERRY_BUSH = new ADBlueberryBushBlock(AbstractBlock.Settings.copy(Blocks.WHEAT));
-    public static final Block GREEN_ONIONS = new ADGreenOnionBlock(AbstractBlock.Settings.copy(Blocks.WHEAT),
-            () -> ADItems.GREEN_ONION);
+    public static final Block GREEN_ONIONS = new ADGreenOnionBlock(AbstractBlock.Settings.copy(Blocks.WHEAT));
     public static final Block OAK_PLANTER_BOX = planterBoxBlock(Blocks.OAK_PLANKS.getDefaultMapColor(),
             BlockSoundGroup.WOOD);
     public static final Block SPRUCE_PLANTER_BOX = planterBoxBlock(Blocks.SPRUCE_PLANKS.getDefaultMapColor(),

@@ -1,21 +1,17 @@
 package rndm_access.assorteddiscoveries.block;
 
 import net.minecraft.block.*;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-
-import java.util.function.Supplier;
+import rndm_access.assorteddiscoveries.core.ADItems;
 
 public class ADGreenOnionBlock extends BeetrootsBlock {
     private static final VoxelShape[] ONION_SHAPE_BY_AGE;
-    private final Supplier<Item> seedItem;
 
-    public ADGreenOnionBlock(AbstractBlock.Settings settings, Supplier<Item> seedItem) {
+    public ADGreenOnionBlock(AbstractBlock.Settings settings) {
         super(settings);
-        this.seedItem = seedItem;
     }
 
     @Override
@@ -24,7 +20,7 @@ public class ADGreenOnionBlock extends BeetrootsBlock {
     }
 
     @Override
-    protected ItemConvertible getSeedsItem() { return seedItem.get(); }
+    protected ItemConvertible getSeedsItem() { return ADItems.GREEN_ONION; }
 
     static {
         ONION_SHAPE_BY_AGE = new VoxelShape[] {
