@@ -1,0 +1,8 @@
+{
+  "parent": "assorted-discoveries:block/template_weeping_heart",
+  "textures": {
+    "base": "assorted-discoveries:block/weeping_heart_base_stage2",
+	"petal": "assorted-discoveries:block/weeping_heart_stage2",
+    "stamen": "assorted-discoveries:block/weeping_heart_stamen_stage2"
+  }
+}
