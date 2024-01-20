@@ -29,11 +29,7 @@ public class ADCakeBlock extends CakeBlock {
             Item item = heldStack.getItem();
             Block block = Block.getBlockFromItem(item);
 
-            System.out.println("first" + " " + this + " " + block);
-
             if (ADCandleCakeBlock.containsCandleCake(this, block)) {
-                System.out.println("placed candle cake");
-
                 return this.placeCandleCake(world, player, pos, heldStack, block, item);
             }
         }

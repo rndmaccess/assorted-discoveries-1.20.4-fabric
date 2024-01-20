@@ -14,7 +14,6 @@ import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Pair;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -25,6 +24,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import rndm_access.assorteddiscoveries.util.ADHashPair;
 
 import java.util.Map;
 
@@ -37,7 +37,7 @@ public class ADCandleCakeBlock extends AbstractCandleBlock {
     private static final VoxelShape CAKE_SHAPE = Block.createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D);
     private static final VoxelShape CANDLE_SHAPE = Block.createCuboidShape(7.0D, 8.0D, 7.0D, 9.0D, 14.0D, 9.0D);
     private static final VoxelShape SHAPE = VoxelShapes.union(CAKE_SHAPE, CANDLE_SHAPE);
-    private static final Map<Pair<Block, Block>, ADCandleCakeBlock> CANDLES_TO_CANDLE_CAKES = Maps.newHashMap();
+    private static final Map<ADHashPair<Block, Block>, ADCandleCakeBlock> CANDLES_TO_CANDLE_CAKES = Maps.newHashMap();
     private final Block cake;
     private final Block candle;
 
@@ -47,7 +47,7 @@ public class ADCandleCakeBlock extends AbstractCandleBlock {
         this.cake = cake;
         this.candle = candle;
 
-        CANDLES_TO_CANDLE_CAKES.put(new Pair<>(cake, candle), this);
+        CANDLES_TO_CANDLE_CAKES.put(new ADHashPair<>(cake, candle), this);
     }
 
     @Override
@@ -81,13 +81,11 @@ public class ADCandleCakeBlock extends AbstractCandleBlock {
     }
 
     public static BlockState getCandleCake(Block cake, Block candle) {
-        return CANDLES_TO_CANDLE_CAKES.get(new Pair<>(cake, candle)).getDefaultState();
+        return CANDLES_TO_CANDLE_CAKES.get(new ADHashPair<>(cake, candle)).getDefaultState();
     }
 
     public static boolean containsCandleCake(Block cake, Block candle) {
-        System.out.println(CANDLES_TO_CANDLE_CAKES.containsKey(new Pair<>(cake, candle)));
-
-        return CANDLES_TO_CANDLE_CAKES.containsKey(new Pair<>(cake, candle));
+        return CANDLES_TO_CANDLE_CAKES.containsKey(new ADHashPair<>(cake, candle));
     }
 
     @Override
