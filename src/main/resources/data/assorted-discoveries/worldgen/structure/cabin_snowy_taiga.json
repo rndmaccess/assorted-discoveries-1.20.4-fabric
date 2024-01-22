@@ -1,10 +1,10 @@
 {
   "type": "minecraft:jigsaw",
-  "biomes": "#c:has_structure/cabin_snowy",
+  "biomes": "#c:has_structure/cabin_snowy_taiga",
   "step": "surface_structures",
   "spawn_overrides": {},
   "terrain_adaptation": "beard_thin",
-  "start_pool": "assorted-discoveries:cabin/snowy/start",
+  "start_pool": "assorted-discoveries:cabin/snowy_taiga/start",
   "size": 7,
   "start_height": {
     "absolute": 0

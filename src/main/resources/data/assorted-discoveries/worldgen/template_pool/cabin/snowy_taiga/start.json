@@ -1,11 +1,11 @@
 {
-  "name": "assorted-discoveries:cabin/snowy/start",
+  "name": "assorted-discoveries:cabin/snowy_taiga/start",
   "fallback": "minecraft:empty",
   "elements": [
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "assorted-discoveries:cabin/snowy_cabin",
+        "location": "assorted-discoveries:cabin/snowy_taiga_cabin",
         "processors": "assorted-discoveries:mossify_stone_bricks_70_percent",
         "projection": "rigid"
       },
