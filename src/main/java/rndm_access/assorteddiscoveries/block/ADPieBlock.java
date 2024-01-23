@@ -16,7 +16,6 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import net.minecraft.world.event.GameEvent;
 
 public class ADPieBlock extends Block {
     public static final IntProperty BITES = Properties.BITES;
@@ -56,18 +55,10 @@ public class ADPieBlock extends Block {
 
     private ActionResult tryEat(WorldAccess world, BlockPos pos, BlockState state, PlayerEntity player) {
         if (player.canConsume(false)) {
-            int i = state.get(BITES);
+            int bitesTaken = state.get(BITES);
 
             player.getHungerManager().add(this.nutrition, this.saturationMod);
-            world.emitGameEvent(player, GameEvent.EAT, pos);
-
-            if (i < 6) {
-                world.setBlockState(pos, state.with(BITES, i + 1), 3);
-            } else {
-                world.removeBlock(pos, false);
-                world.emitGameEvent(player, GameEvent.BLOCK_DESTROY, pos);
-            }
-            return ActionResult.SUCCESS;
+            return ADCakeBlock.eat(world, pos, state, player, bitesTaken, BITES);
         }
         return ActionResult.PASS;
     }
