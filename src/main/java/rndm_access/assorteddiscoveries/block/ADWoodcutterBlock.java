@@ -23,6 +23,7 @@ public class ADWoodcutterBlock extends StonecutterBlock {
         super(settings);
     }
 
+    @Override
     public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
         return new SimpleNamedScreenHandlerFactory(
                 (syncId, playerInventory, player) -> new ADWoodcutterScreenHandler(syncId, playerInventory,

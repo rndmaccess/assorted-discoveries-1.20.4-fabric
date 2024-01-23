@@ -109,10 +109,12 @@ public class ADWoodcuttingRecipe implements Recipe<Inventory> {
             });
         }
 
+        @Override
         public Codec<T> codec() {
             return this.codec;
         }
 
+        @Override
         public T read(PacketByteBuf packetByteBuf) {
             String string = packetByteBuf.readString();
             Ingredient ingredient = Ingredient.fromPacket(packetByteBuf);
@@ -120,6 +122,7 @@ public class ADWoodcuttingRecipe implements Recipe<Inventory> {
             return this.recipeFactory.create(string, ingredient, itemStack);
         }
 
+        @Override
         public void write(PacketByteBuf packetByteBuf, T cuttingRecipe) {
             packetByteBuf.writeString(cuttingRecipe.group);
             cuttingRecipe.getIngredient().write(packetByteBuf);

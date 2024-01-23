@@ -19,6 +19,7 @@ public class ADBloodKelpFeature extends Feature<DefaultFeatureConfig> {
         super(configCodec);
     }
 
+    @Override
     public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
         StructureWorldAccess world = context.getWorld();
         BlockPos originPos = context.getOrigin();

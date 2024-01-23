@@ -43,6 +43,7 @@ public class ADWoodcutterScreenHandler extends ScreenHandler {
         this.inputStack = ItemStack.EMPTY;
         this.contentsChangedListener = () -> {};
         this.input = new SimpleInventory(1) {
+            @Override
             public void markDirty() {
                 super.markDirty();
                 ADWoodcutterScreenHandler.this.onContentChanged(this);
@@ -54,10 +55,12 @@ public class ADWoodcutterScreenHandler extends ScreenHandler {
         this.world = playerInventory.player.getWorld();
         this.inputSlot = this.addSlot(new Slot(this.input, 0, 20, 33));
         this.outputSlot = this.addSlot(new Slot(this.output, 1, 143, 33) {
+            @Override
             public boolean canInsert(ItemStack stack) {
                 return false;
             }
 
+            @Override
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
                 stack.onCraftByPlayer(player.getWorld(), player, stack.getCount());
                 ADWoodcutterScreenHandler.this.output.unlockLastRecipe(player, this.getInputStacks());
@@ -117,10 +120,12 @@ public class ADWoodcutterScreenHandler extends ScreenHandler {
         return this.inputSlot.hasStack() && !this.availableRecipes.isEmpty();
     }
 
+    @Override
     public boolean canUse(PlayerEntity player) {
         return canUse(this.context, player, ADBlocks.WOODCUTTER);
     }
 
+    @Override
     public boolean onButtonClick(PlayerEntity player, int id) {
         if (this.isInBounds(id)) {
             this.selectedRecipe.set(id);
@@ -133,6 +138,7 @@ public class ADWoodcutterScreenHandler extends ScreenHandler {
         return id >= 0 && id < this.availableRecipes.size();
     }
 
+    @Override
     public void onContentChanged(Inventory inventory) {
         ItemStack itemStack = this.inputSlot.getStack();
         if (!itemStack.isOf(this.inputStack.getItem())) {
@@ -162,6 +168,7 @@ public class ADWoodcutterScreenHandler extends ScreenHandler {
         this.sendContentUpdates();
     }
 
+    @Override
     public ScreenHandlerType<?> getType() {
         return ADScreenHandlerTypes.WOODCUTTER;
     }
@@ -170,6 +177,7 @@ public class ADWoodcutterScreenHandler extends ScreenHandler {
         this.contentsChangedListener = contentsChangedListener;
     }
 
+    @Override
     public boolean canInsertIntoSlot(ItemStack stack, Slot slot) {
         return slot.inventory != this.output && super.canInsertIntoSlot(stack, slot);
     }
@@ -221,6 +229,7 @@ public class ADWoodcutterScreenHandler extends ScreenHandler {
         return itemStack;
     }
 
+    @Override
     public void onClosed(PlayerEntity player) {
         super.onClosed(player);
         this.output.removeStack(1);
