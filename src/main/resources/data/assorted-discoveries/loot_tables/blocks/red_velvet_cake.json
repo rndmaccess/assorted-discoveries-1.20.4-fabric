@@ -1,3 +1,4 @@
 {
-  "type": "minecraft:block"
+  "type": "minecraft:block",
+  "random_sequence": "assorted-discoveries:blocks/red_velvet_cake"
 }
