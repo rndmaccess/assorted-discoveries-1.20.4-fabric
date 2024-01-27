@@ -1,21 +1,17 @@
 {
   "type": "minecraft:chest",
-  "pools":
-  [
+  "pools": [
     {
-      "rolls":
-	  {
+      "rolls": {
         "min": 3.0,
         "max": 8.0,
 		"type": "minecraft:uniform"
       },
-      "bonus_rolls":
-	  {
+      "bonus_rolls": {
         "min": 0.0,
         "max": 5.0
       },
-      "entries":
-	  [
+      "entries": [
         {
           "type": "minecraft:item",
           "name": "minecraft:birch_planks",
@@ -90,6 +86,7 @@
         }
       ]
     }
-  ]
+  ],
+  "random_sequence": "assorted-discoveries:chests/birch_forest_cabin"
 }
 
