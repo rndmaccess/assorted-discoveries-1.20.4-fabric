@@ -8,6 +8,11 @@ public class ADCamelPlushBlock extends ADAbstractDirectionalPlushBlock {
             12.0D, 15.0D);
 
     public ADCamelPlushBlock(Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

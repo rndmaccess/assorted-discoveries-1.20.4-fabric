@@ -8,6 +8,11 @@ public class ADPhantomPlushBlock extends ADAbstractDirectionalPlushBlock {
             5.0, 14.0);
 
     public ADPhantomPlushBlock(Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

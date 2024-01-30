@@ -13,10 +13,12 @@ import java.util.HashMap;
 public abstract class ADAbstractDirectionalPlushBlock extends ADPlushBlock {
     private final HashMap<Direction, VoxelShape> shapes;
 
-    protected ADAbstractDirectionalPlushBlock(Settings settings, VoxelShape northShape) {
+    public ADAbstractDirectionalPlushBlock(Settings settings) {
         super(settings);
-        this.shapes = ADVoxelShapeHelper.makeShapeRotationMap(northShape);
+        this.shapes = ADVoxelShapeHelper.makeShapeRotationMap(this.getNorthShape());
     }
+
+    protected abstract VoxelShape getNorthShape();
 
     @Override
     @SuppressWarnings("deprecation")

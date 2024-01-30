@@ -8,6 +8,11 @@ public class ADVillagerPlushBlock extends ADAbstractDirectionalPlushBlock {
             12.5D, 13.0D);
 
     public ADVillagerPlushBlock(Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

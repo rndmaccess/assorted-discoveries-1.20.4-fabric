@@ -9,6 +9,11 @@ public class ADDesertZombieVillagerPlushBlock extends ADAbstractDirectionalPlush
             14.5D, 13.5D);
 
     public ADDesertZombieVillagerPlushBlock(AbstractBlock.Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

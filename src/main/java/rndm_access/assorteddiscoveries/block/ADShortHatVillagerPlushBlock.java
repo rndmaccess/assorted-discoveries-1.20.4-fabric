@@ -9,6 +9,11 @@ public class ADShortHatVillagerPlushBlock extends ADAbstractDirectionalPlushBloc
             13.5D, 13.0D);
 
     public ADShortHatVillagerPlushBlock(AbstractBlock.Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

@@ -9,6 +9,11 @@ public class ADSpiderPlushBlock extends ADAbstractDirectionalPlushBlock {
             7.0D, 14.5D);
 
     public ADSpiderPlushBlock(AbstractBlock.Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

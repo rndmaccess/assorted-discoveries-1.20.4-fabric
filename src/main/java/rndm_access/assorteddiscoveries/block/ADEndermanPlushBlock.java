@@ -9,6 +9,11 @@ public class ADEndermanPlushBlock extends ADAbstractDirectionalPlushBlock {
             12.5D, 14.0D);
 
     public ADEndermanPlushBlock(AbstractBlock.Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

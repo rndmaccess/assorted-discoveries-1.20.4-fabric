@@ -9,6 +9,11 @@ public class ADHoglinPlushBlock extends ADAbstractDirectionalPlushBlock {
             9.0, 15.0);
 
     public ADHoglinPlushBlock(AbstractBlock.Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

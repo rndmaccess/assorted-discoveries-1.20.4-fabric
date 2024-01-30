@@ -8,6 +8,11 @@ public class ADPolarBearPlushBlock extends ADAbstractDirectionalPlushBlock {
             11.5D, 14.5D);
 
     public ADPolarBearPlushBlock(Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

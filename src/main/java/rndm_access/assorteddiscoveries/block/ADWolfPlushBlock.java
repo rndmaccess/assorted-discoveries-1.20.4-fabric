@@ -9,6 +9,11 @@ public class ADWolfPlushBlock extends ADAbstractDirectionalPlushBlock {
             11.5D, 14.5D);
 
     public ADWolfPlushBlock(AbstractBlock.Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

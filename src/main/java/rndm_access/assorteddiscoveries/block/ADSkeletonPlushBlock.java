@@ -9,6 +9,11 @@ public class ADSkeletonPlushBlock extends ADAbstractDirectionalPlushBlock {
             12.5D, 12.5D);
 
     public ADSkeletonPlushBlock(AbstractBlock.Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

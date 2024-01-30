@@ -9,6 +9,11 @@ public class ADStriderPlushBlock extends ADAbstractDirectionalPlushBlock {
             13.0, 13.0);
 
     public ADStriderPlushBlock(AbstractBlock.Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

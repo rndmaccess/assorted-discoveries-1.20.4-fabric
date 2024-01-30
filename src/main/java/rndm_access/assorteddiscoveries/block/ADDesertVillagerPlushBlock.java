@@ -8,6 +8,11 @@ public class ADDesertVillagerPlushBlock extends ADAbstractDirectionalPlushBlock 
             14.5D, 13.0D);
 
     public ADDesertVillagerPlushBlock(Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

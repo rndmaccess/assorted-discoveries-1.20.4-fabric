@@ -8,6 +8,11 @@ public class ADAllayPlushBlock extends ADAbstractDirectionalPlushBlock {
             10.0D, 13.0D);
 
     public ADAllayPlushBlock(Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

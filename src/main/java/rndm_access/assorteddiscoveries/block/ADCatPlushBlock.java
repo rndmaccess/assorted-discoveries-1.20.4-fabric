@@ -8,6 +8,11 @@ public class ADCatPlushBlock extends ADAbstractDirectionalPlushBlock {
             9.5D, 14.5D);
 
     public ADCatPlushBlock(Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

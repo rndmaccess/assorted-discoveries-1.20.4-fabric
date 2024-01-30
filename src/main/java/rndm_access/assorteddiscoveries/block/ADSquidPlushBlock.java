@@ -9,6 +9,11 @@ public class ADSquidPlushBlock extends ADAbstractDirectionalPlushBlock {
             10.0D, 14.0D);
 
     public ADSquidPlushBlock(AbstractBlock.Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }

@@ -8,6 +8,11 @@ public class ADShortHatZombieVillagerPlushBlock extends ADAbstractDirectionalPlu
             13.5D, 13.5D);
 
     public ADShortHatZombieVillagerPlushBlock(Settings settings) {
-        super(settings, NORTH_SHAPE);
+        super(settings);
+    }
+
+    @Override
+    protected VoxelShape getNorthShape() {
+        return NORTH_SHAPE;
     }
 }
