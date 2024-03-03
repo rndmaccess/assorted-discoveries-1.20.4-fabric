@@ -22,9 +22,11 @@ public class ADFoodContainerItem extends Item {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        boolean flag = user instanceof PlayerEntity && ((PlayerEntity)user).isCreative();
-
         user.eatFood(world, stack);
-        return flag ? stack : new ItemStack(this.returnItem);
+
+        if(user instanceof PlayerEntity player && player.isCreative()) {
+            return stack;
+        }
+        return new ItemStack(this.returnItem);
     }
 }

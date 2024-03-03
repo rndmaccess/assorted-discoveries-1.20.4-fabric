@@ -23,14 +23,12 @@ public class ADDrinkContainerItem extends Item {
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        if (user instanceof PlayerEntity playerEntity) {
-            if (!playerEntity.isCreative()) {
-                stack.decrement(1);
-                playerEntity.giveItemStack(new ItemStack(this.emptyContainer, 1));
-                return stack;
-            }
+        user.eatFood(world, stack);
+
+        if (user instanceof PlayerEntity player && !player.isCreative()) {
+            player.giveItemStack(new ItemStack(this.emptyContainer, 1));
         }
-        return user.eatFood(world, stack);
+        return stack;
     }
 
     @Override
