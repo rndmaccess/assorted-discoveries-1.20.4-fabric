@@ -44,7 +44,7 @@ public class ADRopeLadderBlock extends LadderBlock {
         Direction facing = stateAboveLadder.get(FACING);
         int length = this.calcLength(world, pos);
 
-        if (length <= 16) {
+        if (length <= this.getMaxLength()) {
             if (!this.hasSupportingBlock(world, facing, pos)) {
                 return placedState.with(LENGTH, length).with(FACING, facing);
             }
@@ -93,7 +93,7 @@ public class ADRopeLadderBlock extends LadderBlock {
 
         if (stateAboveLadder.isOf(this)) {
             int length = this.calcLength(world, pos);
-            return length <= 16;
+            return length <= this.getMaxLength();
         }
         return this.hasSupportingBlock(world, facing, pos);
     }
@@ -114,6 +114,10 @@ public class ADRopeLadderBlock extends LadderBlock {
         BlockState stateBelowLadder = world.getBlockState(pos.down());
 
         return stateBelowLadder.isOf(this);
+    }
+
+    private int getMaxLength() {
+        return 16;
     }
 
     private int calcLength(WorldView world, BlockPos pos) {
