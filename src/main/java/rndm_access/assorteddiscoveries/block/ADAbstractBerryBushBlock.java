@@ -23,6 +23,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 
+import java.util.Objects;
+
 public abstract class ADAbstractBerryBushBlock extends SweetBerryBushBlock {
     public ADAbstractBerryBushBlock(AbstractBlock.Settings settings) {
         super(settings);
@@ -39,13 +41,11 @@ public abstract class ADAbstractBerryBushBlock extends SweetBerryBushBlock {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         int age = state.get(AGE);
-        boolean isBushMaxAge = age == 3;
-        boolean holdingBoneMeal = player.getStackInHand(hand).isOf(Items.BONE_MEAL);
 
-        if (isBushMaxAge || age > 1 && !holdingBoneMeal) {
-            int j = 1 + world.getRandom().nextInt(2);
+        if (this.isBushMaxAge(age) || age > 1 && !isHoldingBoneMeal(player, hand)) {
+            ItemStack berryStack = new ItemStack(this.berryItem(), this.getBerryAmount(world, age));
 
-            dropStack(world, pos, new ItemStack(this.berryItem(), j + (isBushMaxAge ? 1 : 0)));
+            dropStack(world, pos, berryStack);
             world.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS,
                     1.0F, 0.8F + world.random.nextFloat() * 0.4F);
             world.setBlockState(pos, state.with(AGE, 1), 2);
@@ -93,5 +93,23 @@ public abstract class ADAbstractBerryBushBlock extends SweetBerryBushBlock {
         BlockState blockState = state.with(AGE, age + 1);
         world.setBlockState(pos, blockState, 2);
         world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(blockState));
+    }
+
+    private boolean isBushMaxAge(int age) {
+        return Objects.equals(age, 3);
+    }
+
+    private boolean isHoldingBoneMeal(PlayerEntity player, Hand hand) {
+        return player.getStackInHand(hand).isOf(Items.BONE_MEAL);
+    }
+
+    private int getBerryAmount(World world, int age) {
+        int amount = 1 + world.getRandom().nextInt(2);
+
+        if(this.isBushMaxAge(age)) {
+            return amount + 1;
+        } else {
+            return amount;
+        }
     }
 }
