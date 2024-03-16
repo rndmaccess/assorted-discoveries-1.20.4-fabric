@@ -12,7 +12,7 @@ import rndm_access.assorteddiscoveries.core.CBlockTags;
 @Mixin(WallBlock.class)
 public class ADWallBlockMixin {
     @Inject(method = "shouldConnectTo", at = @At("HEAD"), cancellable = true)
-    private void assorteddiscoveries_shouldConnectTo(BlockState state, boolean faceFullSquare, Direction side,
+    private void shouldConnectTo(BlockState state, boolean faceFullSquare, Direction side,
                                                       CallbackInfoReturnable<Boolean> cir) {
         if(state.isIn(CBlockTags.SNOW_WALLS) || state.isIn(CBlockTags.WOODEN_WALLS)) {
             cir.setReturnValue(true);

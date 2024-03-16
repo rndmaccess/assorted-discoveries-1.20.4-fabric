@@ -18,7 +18,7 @@ import java.util.function.BiConsumer;
 @Mixin(TrunkPlacer.class)
 public class ADTrunkPlacerMixin {
     @Inject(method = "setToDirt", at = @At("HEAD"), cancellable = true)
-    private static void assorteddiscoveries_setToDirt(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer,
+    private static void setToDirt(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer,
                                                       Random random, BlockPos pos, TreeFeatureConfig config,
                                                       CallbackInfo info) {
         if(isPlanterBox(world, pos)) {

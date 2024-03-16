@@ -25,7 +25,7 @@ public abstract class ADBoneMealItemMixin {
     public static void createParticles(WorldAccess world, BlockPos pos, int count) {}
 
     @Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
-    private void assorteddiscoveries_boneMealEndBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> info) {
+    private void boneMealEndBlock(ItemUsageContext context, CallbackInfoReturnable<ActionResult> info) {
         BlockPos blockPos = context.getBlockPos();
         World world = context.getWorld();
         ItemStack boneMealStack = context.getStack();

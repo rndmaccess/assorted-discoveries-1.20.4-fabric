@@ -12,7 +12,7 @@ import rndm_access.assorteddiscoveries.core.CBlockTags;
 public class ADFenceGateBlockMixin {
 
     @Inject(method = "isWall", at = @At("HEAD"), cancellable = true)
-    private void assorteddiscoveries_isWall(BlockState state, CallbackInfoReturnable<Boolean> cir) {
+    private void isWall(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         if(state.isIn(CBlockTags.SNOW_WALLS) || state.isIn(CBlockTags.WOODEN_WALLS)) {
             cir.setReturnValue(true);
         }

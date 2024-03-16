@@ -18,7 +18,7 @@ import rndm_access.assorteddiscoveries.core.CBlockTags;
 @Mixin(SnowyBlock.class)
 public class ADSnowyBlockMixin {
     @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"), cancellable = true)
-    private void assorteddiscoveries_getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState,
+    private void getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState,
                                                 WorldAccess world, BlockPos pos, BlockPos neighborPos,
                                                 CallbackInfoReturnable<BlockState> info) {
         if(direction == Direction.UP && this.isSnowSlabOrStairs(world, neighborPos, neighborState)) {
@@ -27,7 +27,7 @@ public class ADSnowyBlockMixin {
     }
 
     @Inject(method = "getPlacementState", at = @At("HEAD"), cancellable = true)
-    private void assorteddiscoveries_getPlacementState(ItemPlacementContext context, CallbackInfoReturnable<BlockState> info) {
+    private void getPlacementState(ItemPlacementContext context, CallbackInfoReturnable<BlockState> info) {
         World world = context.getWorld();
         BlockPos blockPos = context.getBlockPos().up();
         BlockState blockState = context.getWorld().getBlockState(blockPos);

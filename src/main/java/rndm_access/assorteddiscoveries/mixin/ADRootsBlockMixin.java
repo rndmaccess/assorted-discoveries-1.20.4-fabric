@@ -13,7 +13,7 @@ import rndm_access.assorteddiscoveries.core.ADBlockTags;
 @Mixin(RootsBlock.class)
 public class ADRootsBlockMixin {
     @Inject(method = "canPlantOnTop", at = @At("HEAD"), cancellable = true)
-    private void assorteddiscoveries_canPlantOnTop(BlockState floor, BlockView world,
+    private void canPlantOnTop(BlockState floor, BlockView world,
                                                    BlockPos pos, CallbackInfoReturnable<Boolean> info) {
         if(floor.isIn(ADBlockTags.NETHER_PLANTER_BOXES)) {
             info.setReturnValue(true);
