@@ -17,7 +17,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import rndm_access.assorteddiscoveries.block.state.ADProperties;
-import rndm_access.assorteddiscoveries.util.ADVoxelShapeHelper;
+import rndm_access.assorteddiscoveries.util.ADShapeHelper;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -26,15 +26,18 @@ public class ADCubePlushBlock extends ADPlushBlock {
     public static final IntProperty STACK_SIZE = ADProperties.STACK_SIZE;
     public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
 
-    private static final VoxelShape NORTH_BOTTOM_SHAPE = Block.createCuboidShape(2.5D, 0.0D, 2.5D, 13.5D, 9.5D, 13.5D);
-    private static final HashMap<Direction, VoxelShape> BOTTOM_SHAPES = ADVoxelShapeHelper.makeShapeRotationMap(NORTH_BOTTOM_SHAPE);
+    private static final VoxelShape NORTH_BOTTOM_SHAPE = Block.createCuboidShape(2.5D, 0.0D, 2.5D,
+            13.5D, 9.5D, 13.5D);
+    private static final HashMap<Direction, VoxelShape> BOTTOM_SHAPES = ADShapeHelper.makeShapeRotMap(NORTH_BOTTOM_SHAPE);
 
-    private static final VoxelShape NORTH_TEMP_MIDDLE_SHAPE = Block.createCuboidShape(3.5D, 7.0D, 3.5D, 12.5D, 16.5D, 12.5D);
+    private static final VoxelShape NORTH_TEMP_MIDDLE_SHAPE = Block.createCuboidShape(3.5D, 7.0D,
+            3.5D, 12.5D, 16.5D, 12.5D);
     private static final VoxelShape NORTH_MIDDLE_SHAPE = VoxelShapes.union(NORTH_BOTTOM_SHAPE, NORTH_TEMP_MIDDLE_SHAPE);
-    private static final HashMap<Direction, VoxelShape> MIDDLE_SHAPES = ADVoxelShapeHelper.makeShapeRotationMap(NORTH_MIDDLE_SHAPE);
+    private static final HashMap<Direction, VoxelShape> MIDDLE_SHAPES = ADShapeHelper.makeShapeRotMap(NORTH_MIDDLE_SHAPE);
 
-    private static final VoxelShape NORTH_TOP_SHAPE = Block.createCuboidShape(5.5D, 0.0D, 5.5D, 10.5D, 4.5D, 10.5D);
-    private static final HashMap<Direction, VoxelShape> TOP_SHAPES = ADVoxelShapeHelper.makeShapeRotationMap(NORTH_TOP_SHAPE);
+    private static final VoxelShape NORTH_TOP_SHAPE = Block.createCuboidShape(5.5D, 0.0D, 5.5D,
+            10.5D, 4.5D, 10.5D);
+    private static final HashMap<Direction, VoxelShape> TOP_SHAPES = ADShapeHelper.makeShapeRotMap(NORTH_TOP_SHAPE);
 
     public ADCubePlushBlock(AbstractBlock.Settings settings) {
         super(settings);
@@ -70,8 +73,8 @@ public class ADCubePlushBlock extends ADPlushBlock {
         BlockPos topPos = context.getBlockPos().up();
         BlockState topState = context.getWorld().getBlockState(topPos);
 
-        return (this.isItemCubePlush(context) && this.isStackNotFull(state))
-                || (this.isItemCubePlush(context) && topState.isReplaceable() && this.isDoubleStacked(state));
+        return (this.isCubePlush(context) && this.isStackWithinOneBlock(state))
+                || (this.isCubePlush(context) && topState.isReplaceable() && this.isDoubleStacked(state));
     }
 
     @Override
@@ -105,11 +108,11 @@ public class ADCubePlushBlock extends ADPlushBlock {
         builder.add(STACK_SIZE, HALF, WATERLOGGED, FACING);
     }
 
-    private boolean isItemCubePlush(ItemPlacementContext context) {
+    private boolean isCubePlush(ItemPlacementContext context) {
         return context.getStack().isOf(this.asItem());
     }
 
-    private boolean isStackNotFull(BlockState state) {
+    private boolean isStackWithinOneBlock(BlockState state) {
         return state.get(STACK_SIZE) < 2;
     }
 

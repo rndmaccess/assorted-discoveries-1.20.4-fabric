@@ -18,7 +18,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import rndm_access.assorteddiscoveries.block.state.ADProperties;
-import rndm_access.assorteddiscoveries.util.ADVoxelShapeHelper;
+import rndm_access.assorteddiscoveries.util.ADShapeHelper;
 
 import java.util.HashMap;
 
@@ -27,15 +27,15 @@ public class ADPufferfishPlushBlock extends ADPlushBlock {
 
     private static final VoxelShape SMALL_NORTH_SHAPE = Block.createCuboidShape(4.0D, 0.0D, 3.0D,
             12.0D, 6.0D, 14.0D);
-    private static final HashMap<Direction, VoxelShape> SMALL_SHAPES = ADVoxelShapeHelper.makeShapeRotationMap(SMALL_NORTH_SHAPE);
+    private static final HashMap<Direction, VoxelShape> SMALL_SHAPES = ADShapeHelper.makeShapeRotMap(SMALL_NORTH_SHAPE);
 
     private static final VoxelShape MEDIUM_NORTH_SHAPE = Block.createCuboidShape(1.5D, 0.0D, 2.5D,
             14.5D, 8.5D, 11.5D);
-    private static final HashMap<Direction, VoxelShape> MEDIUM_SHAPES = ADVoxelShapeHelper.makeShapeRotationMap(MEDIUM_NORTH_SHAPE);
+    private static final HashMap<Direction, VoxelShape> MEDIUM_SHAPES = ADShapeHelper.makeShapeRotMap(MEDIUM_NORTH_SHAPE);
 
     private static final VoxelShape LARGE_NORTH_SHAPE = Block.createCuboidShape(0.5D, 0.0D, 1.5D,
             15.5D, 9.5D, 12.5D);
-    private static final HashMap<Direction, VoxelShape> LARGE_SHAPES = ADVoxelShapeHelper.makeShapeRotationMap(LARGE_NORTH_SHAPE);
+    private static final HashMap<Direction, VoxelShape> LARGE_SHAPES = ADShapeHelper.makeShapeRotMap(LARGE_NORTH_SHAPE);
 
     public ADPufferfishPlushBlock(AbstractBlock.Settings settings) {
         super(settings);

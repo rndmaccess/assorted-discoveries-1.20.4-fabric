@@ -17,7 +17,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import org.jetbrains.annotations.Nullable;
-import rndm_access.assorteddiscoveries.util.ADVoxelShapeHelper;
+import rndm_access.assorteddiscoveries.util.ADShapeHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public class ADPlanterBoxBlock extends Block {
     private static HashMap<List<Boolean>, VoxelShape> collectStateShapes() {
         VoxelShape bottomShape = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 15.0, 16.0);
         VoxelShape northBorderShape = Block.createCuboidShape(0.0, 15.0, 13.0, 16.0, 16.0, 16.0);
-        List<VoxelShape> borderShapes = ADVoxelShapeHelper.makeShapeRotationList(northBorderShape);
+        List<VoxelShape> borderShapes = ADShapeHelper.makeShapeRotList(northBorderShape);
         HashMap<List<Boolean>, VoxelShape> shapes = new HashMap<>();
         int borderNum = 4;
         int stateNum = (int) Math.pow(2, borderNum);

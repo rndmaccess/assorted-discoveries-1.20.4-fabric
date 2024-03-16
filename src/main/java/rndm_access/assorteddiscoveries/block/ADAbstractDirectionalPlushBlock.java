@@ -6,7 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
-import rndm_access.assorteddiscoveries.util.ADVoxelShapeHelper;
+import rndm_access.assorteddiscoveries.util.ADShapeHelper;
 
 import java.util.HashMap;
 
@@ -15,7 +15,7 @@ public abstract class ADAbstractDirectionalPlushBlock extends ADPlushBlock {
 
     public ADAbstractDirectionalPlushBlock(Settings settings) {
         super(settings);
-        this.shapes = ADVoxelShapeHelper.makeShapeRotationMap(this.getNorthShape());
+        this.shapes = ADShapeHelper.makeShapeRotMap(this.getNorthShape());
     }
 
     protected abstract VoxelShape getNorthShape();

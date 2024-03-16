@@ -8,10 +8,10 @@ import net.minecraft.util.shape.VoxelShapes;
 import java.util.HashMap;
 import java.util.List;
 
-public final class ADVoxelShapeHelper {
-    private ADVoxelShapeHelper() {}
+public final class ADShapeHelper {
+    private ADShapeHelper() {}
 
-    public static HashMap<Direction, VoxelShape> makeShapeRotationMap(VoxelShape northShape) {
+    public static HashMap<Direction, VoxelShape> makeShapeRotMap(VoxelShape northShape) {
         HashMap<Direction, VoxelShape> shapes = new HashMap<>();
 
         for(Direction direction : Direction.values()) {
@@ -22,7 +22,7 @@ public final class ADVoxelShapeHelper {
         return shapes;
     }
 
-    public static List<VoxelShape> makeShapeRotationList(VoxelShape northShape) {
+    public static List<VoxelShape> makeShapeRotList(VoxelShape northShape) {
         ImmutableList.Builder<VoxelShape> builder = ImmutableList.builder();
 
         for(Direction direction : Direction.values()) {
