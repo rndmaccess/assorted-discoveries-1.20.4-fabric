@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import rndm_access.assorteddiscoveries.util.ADBlockStateUtil;
+import rndm_access.assorteddiscoveries.util.ADMixinUtil;
 
 @Mixin(SnowyBlock.class)
 public class ADSnowyBlockMixin {
@@ -20,7 +20,7 @@ public class ADSnowyBlockMixin {
     private void assorteddiscoveries_getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState,
                                                 WorldAccess world, BlockPos pos, BlockPos neighborPos,
                                                 CallbackInfoReturnable<BlockState> info) {
-        if(direction == Direction.UP && ADBlockStateUtil.isSnowSlabOrStairs(world, neighborPos, neighborState)) {
+        if(direction == Direction.UP && ADMixinUtil.isSnowSlabOrStairs(world, neighborPos, neighborState)) {
             info.setReturnValue(state.with(SnowyBlock.SNOWY, true));
         }
     }
@@ -32,7 +32,7 @@ public class ADSnowyBlockMixin {
         BlockState blockState = context.getWorld().getBlockState(blockPos);
         BlockState placedState = Block.getBlockFromItem(context.getStack().getItem()).getDefaultState();
 
-        if(ADBlockStateUtil.isSnowSlabOrStairs(world, blockPos, blockState)) {
+        if(ADMixinUtil.isSnowSlabOrStairs(world, blockPos, blockState)) {
             info.setReturnValue(placedState.with(SnowyBlock.SNOWY, true));
         }
     }
