@@ -125,7 +125,8 @@ public class AssortedDiscoveries implements ModInitializer {
 			if(source.isBuiltin() && spruceLeavesLootTableId.equals(id)) {
 				LootPool.Builder poolBuilder = LootPool.builder()
 						.rolls(ConstantLootNumberProvider.create(1))
-						.conditionally(TableBonusLootCondition.builder(Enchantments.FORTUNE, 0.02F, 0.023F, 0.025F, 0.035F, 0.1F))
+						.conditionally(TableBonusLootCondition.builder(Enchantments.FORTUNE, 0.02F, 0.023F,
+								0.025F, 0.035F, 0.1F))
 						.with(ItemEntry.builder(ADItems.SPRUCE_CONE))
 						.apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0F, 2.0F)));
 

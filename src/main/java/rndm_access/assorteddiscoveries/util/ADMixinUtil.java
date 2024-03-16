@@ -6,7 +6,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.WorldAccess;
 import rndm_access.assorteddiscoveries.core.CBlockTags;
 
-public final class ADBlockStateUtil {
+public final class ADMixinUtil {
     public static boolean isSnowSlabOrStairs(WorldAccess world, BlockPos pos, BlockState state) {
         boolean isCovered = state.isSideSolidFullSquare(world, pos, Direction.DOWN);
         return state.isIn(CBlockTags.SNOW_STAIRS) && isCovered || state.isIn(CBlockTags.SNOW_SLABS) && isCovered;
