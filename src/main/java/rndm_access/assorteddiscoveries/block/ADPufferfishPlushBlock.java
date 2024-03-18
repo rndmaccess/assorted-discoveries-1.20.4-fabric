@@ -48,10 +48,12 @@ public class ADPufferfishPlushBlock extends ADPlushBlock {
         float pitch = 0.8F + world.getRandom().nextFloat() * 0.4F;
 
         if (puffedLevel < 2) {
-            world.playSound(null, pos, SoundEvents.ENTITY_PUFFER_FISH_BLOW_UP, SoundCategory.BLOCKS, 1.0F, pitch);
+            world.playSound(null, pos, SoundEvents.ENTITY_PUFFER_FISH_BLOW_UP, SoundCategory.BLOCKS,
+                    1.0F, pitch);
             world.setBlockState(pos, state.with(PUFFED, puffedLevel + 1));
         } else {
-            world.playSound(null, pos, SoundEvents.ENTITY_PUFFER_FISH_BLOW_OUT, SoundCategory.BLOCKS, 1.0F, pitch);
+            world.playSound(null, pos, SoundEvents.ENTITY_PUFFER_FISH_BLOW_OUT, SoundCategory.BLOCKS,
+                    1.0F, pitch);
             world.setBlockState(pos, state.with(PUFFED, 0));
         }
         return ActionResult.success(world.isClient());
