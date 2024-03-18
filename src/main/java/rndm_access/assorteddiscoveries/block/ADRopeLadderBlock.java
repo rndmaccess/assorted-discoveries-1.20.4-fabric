@@ -1,8 +1,10 @@
 package rndm_access.assorteddiscoveries.block;
 
 import net.minecraft.block.*;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -28,11 +30,11 @@ public class ADRopeLadderBlock extends LadderBlock {
     public BlockState getPlacementState(ItemPlacementContext context) {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
-        boolean hasSupport = world.getBlockState(pos.up()).isOf(this);
-        boolean isInWater = world.getFluidState(pos).isOf(Fluids.WATER);
-        BlockState placedState = this.getDefaultState().with(WATERLOGGED, isInWater).with(DOWN, this.isEnd(world, pos));
+        FluidState fluidState = world.getFluidState(pos);
+        BlockState placedState = this.getDefaultState().with(WATERLOGGED, this.isWaterSource(fluidState))
+                .with(DOWN, this.isEnd(world, pos));
 
-        if (hasSupport) {
+        if (this.hasSupport(world, pos)) {
             return this.placeHangingLadder(world, pos, placedState);
         } else {
             return this.placeLadder(context, placedState);
@@ -42,7 +44,7 @@ public class ADRopeLadderBlock extends LadderBlock {
     private BlockState placeHangingLadder(World world, BlockPos pos, BlockState placedState) {
         BlockState stateAboveLadder = world.getBlockState(pos.up());
         Direction facing = stateAboveLadder.get(FACING);
-        int length = this.calcLength(world, pos);
+        int length = this.getNextLength(world, pos);
 
         if (length <= this.getMaxLength()) {
             if (!this.hasSupportingBlock(world, facing, pos)) {
@@ -79,8 +81,8 @@ public class ADRopeLadderBlock extends LadderBlock {
             }
 
             // Update each ladders length after the new support block to keep each ladder's length consistent.
-            if (stateAbove.isOf(this)) {
-                return state.with(LENGTH, this.calcLength(world, pos)).with(DOWN, this.isEnd(world, pos));
+            if (this.isRopeLadder(stateAbove)) {
+                return state.with(LENGTH, this.getNextLength(world, pos)).with(DOWN, this.isEnd(world, pos));
             }
         }
         return Blocks.AIR.getDefaultState();
@@ -91,8 +93,8 @@ public class ADRopeLadderBlock extends LadderBlock {
         Direction facing = state.get(FACING);
         BlockState stateAboveLadder = world.getBlockState(pos.up());
 
-        if (stateAboveLadder.isOf(this)) {
-            int length = this.calcLength(world, pos);
+        if (this.isRopeLadder(stateAboveLadder)) {
+            int length = this.getNextLength(world, pos);
             return length <= this.getMaxLength();
         }
         return this.hasSupportingBlock(world, facing, pos);
@@ -113,16 +115,28 @@ public class ADRopeLadderBlock extends LadderBlock {
     private boolean isEnd(WorldAccess world, BlockPos pos) {
         BlockState stateBelowLadder = world.getBlockState(pos.down());
 
-        return stateBelowLadder.isOf(this);
+        return this.isRopeLadder(stateBelowLadder);
     }
 
     private int getMaxLength() {
         return 16;
     }
 
-    private int calcLength(WorldView world, BlockPos pos) {
+    private int getNextLength(WorldView world, BlockPos pos) {
         BlockState stateAboveLadder = world.getBlockState(pos.up());
 
         return stateAboveLadder.get(LENGTH) + 1;
+    }
+
+    private boolean isRopeLadder(BlockState state) {
+        return state.isOf(this);
+    }
+
+    private boolean hasSupport(World world, BlockPos pos) {
+        return this.isRopeLadder(world.getBlockState(pos.up()));
+    }
+
+    private boolean isWaterSource(FluidState fluidState) {
+        return fluidState.isIn(FluidTags.WATER) && fluidState.isStill();
     }
 }
