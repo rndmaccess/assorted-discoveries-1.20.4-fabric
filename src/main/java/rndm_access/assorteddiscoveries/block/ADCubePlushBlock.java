@@ -2,8 +2,10 @@ package rndm_access.assorteddiscoveries.block;
 
 import net.minecraft.block.*;
 import net.minecraft.block.enums.DoubleBlockHalf;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
@@ -16,6 +18,8 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
+import org.jetbrains.annotations.Nullable;
 import rndm_access.assorteddiscoveries.block.state.ADProperties;
 import rndm_access.assorteddiscoveries.util.ADShapeHelper;
 
@@ -45,46 +49,60 @@ public class ADCubePlushBlock extends ADPlushBlock {
                 .with(WATERLOGGED, false));
     }
 
-    private void placeTop(World world, BlockPos pos, BlockState state) {
-        FluidState fluidState = world.getFluidState(pos);
-
-        if (this.isDoubleStacked(state)) {
-            world.setBlockState(pos, state.with(HALF, DoubleBlockHalf.UPPER).with(STACK_SIZE, 3)
-                    .with(WATERLOGGED, this.isWaterSource(fluidState)), 3);
-        }
-    }
-
     @Override
     public BlockState getPlacementState(ItemPlacementContext context) {
         BlockPos pos = context.getBlockPos();
         World world = context.getWorld();
         BlockState state = world.getBlockState(pos);
 
-        if (state.isOf(this)) {
-            this.placeTop(world, pos.up(), state);
-            return state.with(STACK_SIZE, Math.min(3, state.get(STACK_SIZE) + 1));
+        if (this.isCubePlush(state)) {
+            return state.with(STACK_SIZE, this.getNextStackSize(state));
         }
         return super.getPlacementState(context);
     }
 
     @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        FluidState fluidState = world.getFluidState(pos);
+
+        // Top off the stack with the final cube plush.
+        if (this.isTripleStacked(state)) {
+            BlockState cubePlush = state.with(HALF, DoubleBlockHalf.UPPER).with(STACK_SIZE, 3)
+                    .with(WATERLOGGED, this.isWaterSource(fluidState));
+
+            world.setBlockState(pos.up(), cubePlush, 3);
+        }
+    }
+
+    @Override
     @SuppressWarnings("deprecation")
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
-        BlockPos topPos = context.getBlockPos().up();
-        BlockState topState = context.getWorld().getBlockState(topPos);
+        BlockPos abovePos = context.getBlockPos().up();
+        BlockState aboveState = context.getWorld().getBlockState(abovePos);
 
         return (this.isCubePlush(context) && this.isStackWithinOneBlock(state))
-                || (this.isCubePlush(context) && topState.isReplaceable() && this.isDoubleStacked(state));
+                || (this.isCubePlush(context) && aboveState.isReplaceable() && this.isDoubleStacked(state));
     }
 
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState,
                                                 WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        if(this.isTripleStacked(state)) {
-            return this.isPlushBelow(world, pos) || this.isPlushAbove(world, pos)
-                    ? state : Blocks.AIR.getDefaultState();
-        } else {
+        if(this.canStay(state, world, pos)) {
             return state;
+        } else {
+            return Blocks.AIR.getDefaultState();
+        }
+    }
+
+    private boolean canStay(BlockState state, WorldView world, BlockPos pos) {
+        BlockState belowState = world.getBlockState(pos.down());
+        BlockState aboveState = world.getBlockState(pos.up());
+
+        if(this.isTripleStacked(state)) {
+            return this.isCubePlush(belowState) && this.isUpperHalf(state)
+                    || this.isCubePlush(aboveState) && this.isLowerHalf(state);
+        } else {
+            return true;
         }
     }
 
@@ -112,6 +130,10 @@ public class ADCubePlushBlock extends ADPlushBlock {
         return context.getStack().isOf(this.asItem());
     }
 
+    private boolean isCubePlush(BlockState state) {
+        return state.isOf(this);
+    }
+
     private boolean isStackWithinOneBlock(BlockState state) {
         return state.get(STACK_SIZE) < 2;
     }
@@ -124,19 +146,19 @@ public class ADCubePlushBlock extends ADPlushBlock {
         return Objects.equals(state.get(STACK_SIZE), 3);
     }
 
-    private boolean isPlushAbove(WorldAccess world, BlockPos pos) {
-        return world.getBlockState(pos.up()).isOf(this);
-    }
-
-    private boolean isPlushBelow(WorldAccess world, BlockPos pos) {
-        return world.getBlockState(pos.down()).isOf(this);
-    }
-
     private boolean isUpperHalf(BlockState state) {
         return Objects.equals(state.get(HALF), DoubleBlockHalf.UPPER);
     }
 
+    private boolean isLowerHalf(BlockState state) {
+        return Objects.equals(state.get(HALF), DoubleBlockHalf.LOWER);
+    }
+
     private boolean isWaterSource(FluidState fluidState) {
         return fluidState.isIn(FluidTags.WATER) && fluidState.isStill();
+    }
+
+    private int getNextStackSize(BlockState state) {
+        return Math.min(3, state.get(STACK_SIZE) + 1);
     }
 }
