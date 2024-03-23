@@ -37,7 +37,8 @@ public class ADBlocks {
     public static final Block LIGHT_GRAY_HORSE_PLUSH = new ADHorsePlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
     public static final Block BROWN_HORSE_PLUSH = new ADHorsePlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
     public static final Block BLACK_HORSE_PLUSH = new ADHorsePlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
-    public static final Block MAGMA_CUBE_PLUSH = new ADCubePlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
+    public static final Block MAGMA_CUBE_PLUSH = new ADCubePlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH)
+            .pistonBehavior(PistonBehavior.DESTROY));
     public static final Block RED_MOOSHROOM_PLUSH = new ADMooshroomPlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
     public static final Block BROWN_MOOSHROOM_PLUSH = new ADMooshroomPlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
     public static final Block OCELOT_PLUSH = new ADCatPlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
@@ -78,7 +79,8 @@ public class ADBlocks {
     public static final Block BLACK_SHEEP_PLUSH = new ADSheepPlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
     public static final Block MAROON_SHEEP_PLUSH = new ADSheepPlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
     public static final Block SKELETON_PLUSH = new ADSkeletonPlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
-    public static final Block SLIME_PLUSH = new ADCubePlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
+    public static final Block SLIME_PLUSH = new ADCubePlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH)
+            .pistonBehavior(PistonBehavior.DESTROY));
     public static final Block SPIDER_PLUSH = new ADSpiderPlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
     public static final Block SQUID_PLUSH = new ADSquidPlushBlock(AbstractBlock.Settings.copy(BAT_PLUSH));
     public static final Block GLOW_SQUID_PLUSH = new ADSquidPlushBlock(AbstractBlock.Settings.create().burnable()

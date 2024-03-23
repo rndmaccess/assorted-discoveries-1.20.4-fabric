@@ -3,6 +3,7 @@ package rndm_access.assorteddiscoveries.block;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -50,6 +51,7 @@ public class ADCubePlushBlock extends ADPlushBlock {
     }
 
     @Override
+    @Nullable
     public BlockState getPlacementState(ItemPlacementContext context) {
         BlockPos pos = context.getBlockPos();
         World world = context.getWorld();
@@ -63,14 +65,15 @@ public class ADCubePlushBlock extends ADPlushBlock {
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        FluidState fluidState = world.getFluidState(pos);
+        BlockPos abovePos = pos.up();
+        FluidState fluidState = world.getFluidState(abovePos);
 
         // Top off the stack with the final cube plush.
         if (this.isTripleStacked(state)) {
-            BlockState cubePlush = state.with(HALF, DoubleBlockHalf.UPPER).with(STACK_SIZE, 3)
+            BlockState placedState = state.with(HALF, DoubleBlockHalf.UPPER).with(STACK_SIZE, 3)
                     .with(WATERLOGGED, this.isWaterSource(fluidState));
 
-            world.setBlockState(pos.up(), cubePlush, 3);
+            world.setBlockState(abovePos, placedState, 3);
         }
     }
 
@@ -99,11 +102,26 @@ public class ADCubePlushBlock extends ADPlushBlock {
         BlockState aboveState = world.getBlockState(pos.up());
 
         if(this.isTripleStacked(state)) {
-            return this.isCubePlush(belowState) && this.isUpperHalf(state)
-                    || this.isCubePlush(aboveState) && this.isLowerHalf(state);
+            return this.isCubePlush(belowState) && this.isLowerHalf(belowState) && this.isUpperHalf(state)
+                    || this.isCubePlush(aboveState) && this.isUpperHalf(aboveState) && this.isLowerHalf(state);
         } else {
             return true;
         }
+    }
+
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        // Prevents items from being dropped when breaking a 3-tier plush in creative.
+        if ((!world.isClient() && (player.isCreative() || !player.canHarvest(state))) && this.isUpperHalf(state)) {
+            BlockPos belowPos = pos.down();
+            BlockState belowState = world.getBlockState(belowPos);
+            if (this.isCubePlush(belowState) && this.isLowerHalf(belowState)) {
+                BlockState newState = belowState.get(WATERLOGGED) ? Blocks.WATER.getDefaultState()
+                        : Blocks.AIR.getDefaultState();
+                world.setBlockState(belowPos, newState, 3);
+                world.syncWorldEvent(player, 2001, belowPos, Block.getRawIdFromState(belowState));
+            }
+        }
+        return super.onBreak(world, pos, state, player);
     }
 
     @Override
