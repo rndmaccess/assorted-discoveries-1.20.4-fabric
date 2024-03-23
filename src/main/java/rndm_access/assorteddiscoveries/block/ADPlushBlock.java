@@ -5,7 +5,6 @@ import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -32,12 +31,12 @@ public class ADPlushBlock extends HorizontalFacingBlock implements Waterloggable
     public BlockState getPlacementState(ItemPlacementContext context) {
         BlockPos pos = context.getBlockPos();
         World world = context.getWorld();
-        FluidState fluidstate = world.getFluidState(pos);
-        boolean isWaterSource = fluidstate.isIn(FluidTags.WATER) && fluidstate.isStill();
+        FluidState fluidState = world.getFluidState(pos);
 
         for (Direction direction : context.getPlacementDirections()) {
             if (direction.getAxis().isHorizontal()) {
-                return this.getDefaultState().with(FACING, direction.getOpposite()).with(WATERLOGGED, isWaterSource);
+                return this.getDefaultState().with(FACING, direction.getOpposite())
+                        .with(WATERLOGGED, fluidState.isOf(Fluids.WATER));
             }
         }
         return null;

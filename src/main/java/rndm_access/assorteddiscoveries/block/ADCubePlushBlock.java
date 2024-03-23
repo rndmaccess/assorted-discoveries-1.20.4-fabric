@@ -5,9 +5,9 @@ import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.IntProperty;
@@ -56,9 +56,10 @@ public class ADCubePlushBlock extends ADPlushBlock {
         BlockPos pos = context.getBlockPos();
         World world = context.getWorld();
         BlockState state = world.getBlockState(pos);
+        FluidState fluidState = world.getFluidState(pos);
 
         if (this.isCubePlush(state)) {
-            return state.with(STACK_SIZE, this.getNextStackSize(state));
+            return state.with(STACK_SIZE, this.getNextStackSize(state)).with(WATERLOGGED, fluidState.isOf(Fluids.WATER));
         }
         return super.getPlacementState(context);
     }
@@ -71,7 +72,7 @@ public class ADCubePlushBlock extends ADPlushBlock {
         // Top off the stack with the final cube plush.
         if (this.isTripleStacked(state)) {
             BlockState placedState = state.with(HALF, DoubleBlockHalf.UPPER).with(STACK_SIZE, 3)
-                    .with(WATERLOGGED, this.isWaterSource(fluidState));
+                    .with(WATERLOGGED, fluidState.isOf(Fluids.WATER));
 
             world.setBlockState(abovePos, placedState, 3);
         }
@@ -170,10 +171,6 @@ public class ADCubePlushBlock extends ADPlushBlock {
 
     private boolean isLowerHalf(BlockState state) {
         return Objects.equals(state.get(HALF), DoubleBlockHalf.LOWER);
-    }
-
-    private boolean isWaterSource(FluidState fluidState) {
-        return fluidState.isIn(FluidTags.WATER) && fluidState.isStill();
     }
 
     private int getNextStackSize(BlockState state) {
