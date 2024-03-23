@@ -565,6 +565,8 @@ public class ADBlocks {
     public static final Block CALCITE_WALL = new WallBlock(AbstractBlock.Settings.copy(Blocks.CALCITE));
     public static final Block BAMBOO_PLANTER_BOX = planterBoxBlock(Blocks.BAMBOO_PLANKS.getDefaultMapColor(),
             BlockSoundGroup.BAMBOO_WOOD);
+    public static final Block POTTED_CATTAIL = new FlowerPotBlock(ADBlocks.CATTAIL,
+            AbstractBlock.Settings.copy(Blocks.POTTED_RED_MUSHROOM));
 
     private static WallTorchBlock wallTorchBlock(DefaultParticleType flameParticle) {
         return new WallTorchBlock(flameParticle, AbstractBlock.Settings.copy(Blocks.WALL_TORCH));
@@ -1038,6 +1040,7 @@ public class ADBlocks {
         register("calcite_slab", CALCITE_SLAB);
         register("calcite_wall", CALCITE_WALL);
         register("bamboo_planter_box", BAMBOO_PLANTER_BOX);
+        register("potted_cattail", POTTED_CATTAIL);
 
         AssortedDiscoveries.LOGGER.info("Registered blocks");
     }
