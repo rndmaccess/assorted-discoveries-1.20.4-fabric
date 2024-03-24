@@ -1,5 +1,6 @@
 package rndm_access.assorteddiscoveries.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.util.math.BlockPos;
@@ -10,13 +11,15 @@ import rndm_access.assorteddiscoveries.util.ADShapeHelper;
 
 import java.util.HashMap;
 
-public abstract class ADAbstractDirectionalPlushBlock extends ADPlushBlock {
+public abstract class ADAbstractSimplePlushBlock extends ADAbstractPlushBlock {
     private final HashMap<Direction, VoxelShape> shapes;
 
-    public ADAbstractDirectionalPlushBlock(Settings settings) {
+    public ADAbstractSimplePlushBlock(Settings settings) {
         super(settings);
         this.shapes = ADShapeHelper.makeShapeRotMap(this.getNorthShape());
     }
+
+    protected abstract MapCodec<? extends ADAbstractSimplePlushBlock> getCodec();
 
     protected abstract VoxelShape getNorthShape();
 

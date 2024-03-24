@@ -13,19 +13,15 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 
-public class ADPlushBlock extends HorizontalFacingBlock implements Waterloggable {
-    public static final MapCodec<ADPlushBlock> CODEC = createCodec(ADPlushBlock::new);
+public abstract class ADAbstractPlushBlock extends HorizontalFacingBlock implements Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
 
-    protected ADPlushBlock(AbstractBlock.Settings settings) {
+    protected ADAbstractPlushBlock(AbstractBlock.Settings settings) {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(WATERLOGGED, false));
     }
 
-    @Override
-    protected MapCodec<? extends HorizontalFacingBlock> getCodec() {
-        return CODEC;
-    }
+    protected abstract MapCodec<? extends ADAbstractPlushBlock> getCodec();
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext context) {

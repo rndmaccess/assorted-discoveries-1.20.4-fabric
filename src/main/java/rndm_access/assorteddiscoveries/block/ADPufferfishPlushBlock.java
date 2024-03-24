@@ -1,9 +1,7 @@
 package rndm_access.assorteddiscoveries.block;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -22,7 +20,8 @@ import rndm_access.assorteddiscoveries.util.ADShapeHelper;
 
 import java.util.HashMap;
 
-public class ADPufferfishPlushBlock extends ADPlushBlock {
+public class ADPufferfishPlushBlock extends ADAbstractPlushBlock {
+    public static final MapCodec<ADPufferfishPlushBlock> CODEC = createCodec(ADPufferfishPlushBlock::new);
     public static final IntProperty PUFFED = ADProperties.PUFFED;
 
     private static final VoxelShape SMALL_NORTH_SHAPE = Block.createCuboidShape(4.0D, 0.0D, 3.0D,
@@ -39,6 +38,11 @@ public class ADPufferfishPlushBlock extends ADPlushBlock {
 
     public ADPufferfishPlushBlock(AbstractBlock.Settings settings) {
         super(settings);
+    }
+
+    @Override
+    protected MapCodec<ADPufferfishPlushBlock> getCodec() {
+        return CODEC;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package rndm_access.assorteddiscoveries.block;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.LivingEntity;
@@ -27,7 +28,8 @@ import rndm_access.assorteddiscoveries.util.ADShapeHelper;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class ADCubePlushBlock extends ADPlushBlock {
+public class ADCubePlushBlock extends ADAbstractPlushBlock {
+    public static final MapCodec<ADCubePlushBlock> CODEC = createCodec(ADCubePlushBlock::new);
     public static final IntProperty STACK_SIZE = ADProperties.STACK_SIZE;
     public static final EnumProperty<DoubleBlockHalf> HALF = Properties.DOUBLE_BLOCK_HALF;
 
@@ -48,6 +50,11 @@ public class ADCubePlushBlock extends ADPlushBlock {
         super(settings);
         this.setDefaultState(this.getDefaultState().with(HALF, DoubleBlockHalf.LOWER).with(STACK_SIZE, 1)
                 .with(WATERLOGGED, false));
+    }
+
+    @Override
+    protected MapCodec<ADCubePlushBlock> getCodec() {
+        return CODEC;
     }
 
     @Override
