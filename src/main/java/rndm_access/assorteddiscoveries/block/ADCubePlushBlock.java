@@ -56,10 +56,9 @@ public class ADCubePlushBlock extends ADPlushBlock {
         BlockPos pos = context.getBlockPos();
         World world = context.getWorld();
         BlockState state = world.getBlockState(pos);
-        FluidState fluidState = world.getFluidState(pos);
 
         if (this.isCubePlush(state)) {
-            return state.with(STACK_SIZE, this.getNextStackSize(state)).with(WATERLOGGED, fluidState.isOf(Fluids.WATER));
+            return state.with(STACK_SIZE, this.getNextStackSize(state));
         }
         return super.getPlacementState(context);
     }
@@ -118,6 +117,8 @@ public class ADCubePlushBlock extends ADPlushBlock {
             if (this.isCubePlush(belowState) && this.isLowerHalf(belowState)) {
                 BlockState newState = belowState.get(WATERLOGGED) ? Blocks.WATER.getDefaultState()
                         : Blocks.AIR.getDefaultState();
+
+                // Replace the cube plush's lower half with either air or water.
                 world.setBlockState(belowPos, newState, 3);
                 world.syncWorldEvent(player, 2001, belowPos, Block.getRawIdFromState(belowState));
             }
