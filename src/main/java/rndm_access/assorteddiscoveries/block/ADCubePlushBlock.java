@@ -20,7 +20,6 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 import rndm_access.assorteddiscoveries.block.state.ADProperties;
 import rndm_access.assorteddiscoveries.util.ADShapeHelper;
@@ -97,20 +96,17 @@ public class ADCubePlushBlock extends ADAbstractPlushBlock {
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState,
                                                 WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        if(this.canStay(state, world, pos)) {
+        if(this.canStay(state, neighborState, direction)) {
             return state;
         } else {
             return Blocks.AIR.getDefaultState();
         }
     }
 
-    private boolean canStay(BlockState state, WorldView world, BlockPos pos) {
-        BlockState belowState = world.getBlockState(pos.down());
-        BlockState aboveState = world.getBlockState(pos.up());
-
-        if(this.isTripleStacked(state)) {
-            return this.isCubePlush(belowState) && this.isLowerHalf(belowState) && this.isUpperHalf(state)
-                    || this.isCubePlush(aboveState) && this.isUpperHalf(aboveState) && this.isLowerHalf(state);
+    private boolean canStay(BlockState state, BlockState neighborState, Direction direction) {
+        if(this.isTripleStacked(state) && (direction == Direction.DOWN && isUpperHalf(state)
+                || direction == Direction.UP && isLowerHalf(state))) {
+            return isCubePlush(neighborState);
         } else {
             return true;
         }
